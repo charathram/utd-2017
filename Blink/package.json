@@ -1,0 +1,16 @@
+{
+  "name": "blink",
+  "version": "1.0.0",
+  "description": "Simple Blink Program",
+  "main": "blink.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Charath Ranganathan",
+  "license": "ISC",
+  "dependencies": {
+    "lupus": "0.0.1",
+    "onoff": "^1.1.4",
+    "pigpio": "^0.6.1"
+  }
+}

@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Socket.IO Timer</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div id="big_timer" class="jumbotron" style="width: 50%;
+                text-align: center;            
+                height: 100%;
+                padding: 2%;
+                margin:auto;">
+        <h1 id="jumbotext"></h1>
+    </div>
+    <br /><br />
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6" style="margin:auto;">
+        <div class="input-group">
+            <input type="text" id="counter" class="form-control" placeholder="Countdown...">
+            <span class="input-group-btn">
+            <button id="start_timer" class="btn btn-default" type="button">Start Timer</button>
+            </span>
+        </div>
+    </div>
+    <div class="col-lg-3"></div>
+
+
+
+    <script>
+        var socket = io();
+        var count = 0;
+
+        function sendMsg(seconds) {
+            socket.emit('clicked', seconds);
+        }
+
+
+        $(document).ready(function () {
+            $("#jumbotext").text('Enter a Time');
+            $("#start_timer").on('click', function () {
+                $(this).prop("disabled", true);
+                $("#counter").prop('disabled', true);
+                count = $("#counter").val();
+                $("#jumbotext").text(count);
+                sendMsg(count);
+            });
+            socket.on('timer_tick', function (count) {
+                $("#jumbotext").text(count);
+            });
+            socket.on('timer_done', function () {
+                $("#start_timer").prop("disabled", false);
+                $("#counter").prop('disabled', false);
+                $("#jumbotext").text('Enter a Time');
+            });
+
+        });
+    </script>
+
+</body>
+</html>
